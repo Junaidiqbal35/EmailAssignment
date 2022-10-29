@@ -30,8 +30,11 @@ def compose(request):
         return JsonResponse({"error": "POST request required."}, status=400)
 
     # Check recipient emails
-    data = json.loads(request.body)
-    emails = [email.strip() for email in data.get("recipients").split(",")]
+
+    # data = json.loads(request.body)
+    print(request.POST["recipients"])
+
+    emails = [email.strip() for email in request.POST["recipients"].split(",")]
     if emails == [""]:
         return JsonResponse({
             "error": "At least one recipient required."
@@ -49,8 +52,8 @@ def compose(request):
             }, status=400)
 
     # Get contents of email
-    subject = data.get("subject", "")
-    body = data.get("body", "")
+    subject = request.POST["subject"]
+    body = request.POST["body"]
 
     # Create one email for each recipient, plus sender
     users = set()
@@ -70,6 +73,7 @@ def compose(request):
         email.save()
 
     return JsonResponse({"message": "Email sent successfully."}, status=201)
+
 
 
 @login_required
@@ -118,7 +122,7 @@ def email(request, email_id):
         if data.get("archived") is not None:
             email.archived = data["archived"]
         email.save()
-        return HttpResponse(status=204)
+        return JsonResponse({"message": "success."}, status=200)
 
     # Email must be via GET or PUT
     else:
