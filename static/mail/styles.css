@@ -1,3 +1,15 @@
 textarea {
     min-height: 400px;
 }
+.color-archive{
+    background: red;
+}
+.color-unarchive{
+    background: yellow;
+}
+.color-read{
+    background: green;
+}
+.color-notread{
+    background: grey;
+}

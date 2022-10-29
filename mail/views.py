@@ -1,7 +1,6 @@
 import json
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.core import serializers
 from django.db import IntegrityError
 from django.http import JsonResponse
 from django.shortcuts import HttpResponse, HttpResponseRedirect, render
@@ -12,6 +11,7 @@ from .models import User, Email
 
 
 def index(request):
+
     # Authenticated users view their inbox
     if request.user.is_authenticated:
         return render(request, "mail/inbox.html")
@@ -74,6 +74,7 @@ def compose(request):
 
 @login_required
 def mailbox(request, mailbox):
+
     # Filter emails returned based on mailbox
     if mailbox == "inbox":
         emails = Email.objects.filter(
@@ -90,15 +91,15 @@ def mailbox(request, mailbox):
     else:
         return JsonResponse({"error": "Invalid mailbox."}, status=400)
 
-    # Return emails in reverse chronological order
+    # Return emails in reverse chronologial order
     emails = emails.order_by("-timestamp").all()
-
-    return JsonResponse([email.serialize() for email in emails], safe=False, json_dumps_params={'indent': 4})
+    return JsonResponse([email.serialize() for email in emails], safe=False)
 
 
 @csrf_exempt
 @login_required
 def email(request, email_id):
+
     # Query for requested email
     try:
         email = Email.objects.get(user=request.user, pk=email_id)
@@ -176,5 +177,3 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "mail/register.html")
-
-
