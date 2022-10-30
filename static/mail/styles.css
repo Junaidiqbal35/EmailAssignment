@@ -5,11 +5,17 @@ textarea {
     background: red;
 }
 .color-unarchive{
-    background: yellow;
+    background: rgb(179, 212, 233);
 }
 .color-read{
     background: green;
 }
 .color-notread{
     background: grey;
+}
+.color-unread-bg{
+    background: white;
+}
+.color-read-bg{
+    background: lightgray;
 }
