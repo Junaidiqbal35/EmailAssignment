@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block body %}
-    <h2 xmlns="http://www.w3.org/1999/html" class="current_user_email">{{ request.user.email }}</h2>
+    <h2 xmlns="http://www.w3.org/1999/html">{{ request.user.email }}</h2>
 
     <button class="btn btn-sm btn-outline-primary" id="inbox">Inbox</button>
     <button class="btn btn-sm btn-outline-primary" id="compose">Compose</button>
@@ -14,6 +14,7 @@
     <div id="emails-view">
     </div>
     <div id="email-detail-view">
+        <div id="archivemessage"></div>
         <div id="#emailId"></div>
         <div id="#from"></div>
         <br/>
@@ -23,10 +24,8 @@
         <br/>
         <div id="#timestamp"></div>
         <br/>
-        <div id="#body"></div>
-        <br/>
-        <input type="checkbox" id="isreadcheckbox" name="isreadcheckbox" value="read"/>
-        <label for="isreadcheckbox"> Is Read</label>
+<!--        <input type="checkbox" id="isreadcheckbox" name="isreadcheckbox" value="read"/>-->
+<!--        <label for="isreadcheckbox"> Is Read</label>-->
         <br/>
         <button class="btn btn-sm btn-outline-primary" id="replyId">Reply</button>
         <button class="btn btn-sm btn-outline-primary" id="archiveId">Archive</button>
@@ -34,24 +33,20 @@
 
     <div id="compose-view">
         <div id="message"></div>
-        <h3 id="compose_heading">New Email</h3>
+        <h3>New Email</h3>
         <form id="compose-form">
-
+            {% csrf_token %}
             <div class="form-group">
-                <label>From:</label>
-                <input disabled class="form-control" id="#compose-sender" value="{{ request.user.email }}">
+                From: <input disabled class="form-control" value="{{ request.user.email }}">
             </div>
             <div class="form-group">
-                <label>To:</label>
-                <input id="#compose-recipients" name="recipients" class="form-control">
+                To: <input id="#compose-recipients" name="recipients" class="form-control">
             </div>
             <div class="form-group">
-                <label>Subject:</label>
                 <input class="form-control" id="#compose-subject" name="subject" placeholder="Subject">
             </div>
-            <label>Body:</label>
             <textarea class="form-control" id="#compose-body" placeholder="Body" name="body"></textarea>
-            <button type="submit" class="btn btn-primary"> Submit </button>
+            <button id="#btncompose" type="submit" class="btn btn-primary"/> Submit </button>
         </form>
     </div>
 {% endblock %}

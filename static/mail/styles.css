@@ -8,14 +8,8 @@ textarea {
     background: rgb(179, 212, 233);
 }
 .color-read{
-    background: green;
+    background: lightgray;
 }
 .color-notread{
-    background: grey;
-}
-.color-unread-bg{
     background: white;
-}
-.color-read-bg{
-    background: lightgray;
 }
